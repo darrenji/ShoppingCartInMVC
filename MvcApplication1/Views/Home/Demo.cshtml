@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Demo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles
+{
+    <link href="~/Content/shopitem.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 column productbox">
+            <img src="/images/1.jpg" style="width: 460px;height: 250px;" class="img-responsive">
+            <div class="producttitle">
+                <div class="productname">产品1</div>
+                <div class="productdes">产品描述产品描述产品描述产品描述产品描述产品描述产品描述</div>
+                <div>
+                    <table>
+                        <tr>
+                            <td>单价：</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>数量：</td>
+                            <td>
+                                <input class="demo2" type="text" value="1" name="demo2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>小计：</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="productprice">
+                <div class="text-center">
+                    <a href="#" class="btn btn-default btn-sm" role="button">删除</a>
+                    <a href="#" class="btn btn-danger btn-sm" role="button">查看</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 column productbox">
+            <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
+            <div class="producttitle">Product 2</div>
+            <div class="productprice">
+                <div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div>
+                <div class="pricetext">£8.95</div>
+            </div>
+        </div>
+        <div class="col-md-4 column productbox">
+            <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
+            <div class="producttitle">Product 2</div>
+            <div class="productprice">
+                <div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div>
+                <div class="pricetext">£8.95</div>
+            </div>
+        </div>
+        <div style="clear: both;" ></div> 
+        <div class="col-md-4 column productbox">
+            <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
+            <div class="producttitle">Product 2</div>
+            <div class="productprice">
+                <div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div>
+                <div class="pricetext">£8.95</div>
+            </div>
+        </div>
+        <div class="col-md-4 column productbox">
+            <img src="http://placehold.it/460x250/e67e22/ffffff&text=HTML5" class="img-responsive">
+            <div class="producttitle">Product 2</div>
+            <div class="productprice">
+                <div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div>
+                <div class="pricetext">£8.95</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.bootstrap-touchspin.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var i = $("input[class='demo2']");
+            i.TouchSpin({
+                min: 1,
+                max: 100,
+                step: 1//增量或减量
+            });
+
+            i.on("touchspin.on.stopupspin", function () {
+                alert("加1了");
+            });
+
+            i.on("touchspin.on.stopdownspin", function () {
+                alert("减1了");
+            });
+        });
+    </script>
+}

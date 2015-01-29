@@ -1,0 +1,16 @@
+﻿@model MvcApplication1.Models.Product
+
+<div class="item">
+    <h3>@Model.Name</h3>
+    <p><img src="@Model.ImageUrl" style="width: 100px;height: 100px;"/></p>
+    <p>@Model.Description</p>
+    <h4>@Model.Price.ToString("c")</h4>
+    @using (Html.BeginForm("AddToCart", "Home"))
+    {
+        @Html.HiddenFor(p => p.Id)
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+        <input type="submit" value="+放入购物车"/>
+    }
+    
+
+</div>

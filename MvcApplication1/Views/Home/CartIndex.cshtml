@@ -1,0 +1,118 @@
+﻿@model MvcApplication1.Models.CartIndexVm
+
+@{
+    ViewBag.Title = "CartIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles
+{
+    <link href="~/Content/shopitem.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div class="row">
+      @for (int i = 0; i < Model.Cart.Lines.Count(); i++)
+      {
+          var item = (Model.Cart.Lines.ToList())[i];
+
+
+          if (i != 0 && i%4 == 0) //每行有4个div
+          {
+              <div style="clear:both;"></div>
+          }
+          
+          <div class="col-md-3 column productbox">
+                 
+                <img src="@item.Product.ImageUrl" style="width: 460px; height: 250px;" class="img-responsive">
+                <div class="producttitle">
+                    <div class="productname">@item.Product.Name</div>
+                    <div class="productdes">@item.Product.Description</div>
+                    <div>
+                        <table>
+                            <tr>
+                                <td style="width:50px;">单价：</td>
+                                <td>@item.Product.Price</td>
+                            </tr>
+                            <tr>
+                                <td>数量：</td>
+                                <td>
+                                    <input class="demo2" type="text" value="@item.Quantity" name="demo2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>小计：</td>
+                                <td>@((item.Quantity * item.Product.Price).ToString("c"))</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="productprice">
+                    <div class="text-center">
+                        @using (Html.BeginForm("RemoveFromCart", "Home"))
+                        {
+                            @Html.Hidden("Id", item.Product.Id)
+                            @Html.HiddenFor(x => x.ReturnUrl)
+                            <input class="btn btn-default btn-sm" type="submit" value="移除"/>
+                            <a href="#" class="btn btn-danger btn-sm" role="button">查看</a>
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+      }
+              
+    </div>
+</div>
+<hr/>
+<div class="container">
+    <div class="row">
+        <div class="text-center" style="font-size: 55px;font-weight: bold;color: red;">
+           <span>总计：</span> @Model.Cart.ComputeTotalPrice().ToString("c")
+        </div>
+        <p align="left" class="actionButtons" style="width: 100%; clear: both">
+            <a href="@Model.ReturnUrl">继续购物</a>
+        </p>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.bootstrap-touchspin.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var i = $("input[class='demo2']");
+            i.TouchSpin({
+                min: 1,
+                max: 100,
+                step: 1//增量或减量
+            });
+
+            i.on("touchspin.on.stopupspin", function () {
+                $.post('@Url.Action("IncreaseOrDecreaseOne", "Home")', { "id": $(this).closest("div.productbox").find('#Id').val(), "quantity": $(this).val() }, function (data) {
+                    if (data.msg) {
+                        location.reload();
+                    }
+                });
+
+                //var temp = $(this).val();
+                //alert(temp);
+
+
+                //var temp = $(this).closest("div.productbox").find('#Id').val();
+                //alert(temp);
+            });
+
+            i.on("touchspin.on.stopdownspin", function () {
+                $.post('@Url.Action("IncreaseOrDecreaseOne", "Home")', { "id": $(this).closest("div.productbox").find('#Id').val(), "quantity": $(this).val() }, function (data) {
+                    if (data.msg) {
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+}

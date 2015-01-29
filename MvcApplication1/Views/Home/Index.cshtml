@@ -1,0 +1,29 @@
+﻿@model MvcApplication1.Models.ProductsListVm
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .item {
+        border-bottom: solid 1px gray;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Products)
+        {
+            Html.RenderPartial("ProductSummary", item);
+        }
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        
+    </script>
+}
